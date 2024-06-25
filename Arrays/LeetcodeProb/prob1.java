@@ -3,7 +3,7 @@
 // Time complexity :-O(n×m) n=no of rows , m = no. of columns
 //Space complexity :- O(n×m)
 
-class Solution {
+class prob1 {
     public int[][] transpose(int[][] matrix) {
         
 
