@@ -1,4 +1,6 @@
-class Solution
+package Sorting;
+
+class insertion
 {  
   static void insert(int arr[],int i)
   {
