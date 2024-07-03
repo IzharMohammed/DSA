@@ -1,5 +1,4 @@
 package BinarySearch_problems;
-import java.util.Arrays;
 
 /*
 Q) Find first occurence of given element x , given array is SORTED , if no occurence of x is found then
