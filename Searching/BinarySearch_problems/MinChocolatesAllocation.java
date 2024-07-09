@@ -34,6 +34,57 @@ Output
  */
 
  
-public class MinChocolatesAllocation {
 
+ class Main {
+
+    static boolean Divisible(int [] arr , int noOfStudents , int maxChocolates){
+        int currentStudents = 1 , currentChocolates=0;
+        
+        for(int i = 0 ; i < arr.length ; i++){
+            if(arr[i] > maxChocolates){
+                return false;
+            }
+            
+
+             if (currentChocolates + arr[i] > maxChocolates) {
+                // Allocate chocolates to the next student
+                currentStudents++;
+                currentChocolates = arr[i];
+                if (currentStudents > noOfStudents) {
+                    return false;
+                }
+            } else {
+                currentChocolates += arr[i];
+            }
+        }
+
+        return true;
+        
+    }
+     
+     static int MinValue(int [] arr , int noOfStudents){
+            int start = 0, end = 0, ans = -1;
+        for (int chocolates : arr) {
+            end += chocolates;
+        }
+         while(start <= end){
+             int mid = start + (end - start)/2;
+             if(Divisible(arr , noOfStudents , mid)){
+                 ans = mid;
+                 end = mid -1;
+                  System.out.println("end"+end);
+                  System.out.println("ans"+ans);
+             }else{
+                 start = mid + 1;
+             }
+         }
+         return ans;
+     }
+  
+    public static void main(String[] args) {
+       int[]arr={5, 3 , 1 , 4, 2};
+        int m = 3;
+        System.out.println(MinValue(arr,m));
+
+    }
 }
