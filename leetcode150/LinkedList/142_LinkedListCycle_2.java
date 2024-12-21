@@ -26,6 +26,35 @@ Example 3:
 Input: head = [1], pos = -1
 Output: no cycle
 Explanation: There is no cycle in the linked list.
+
+
+ * **Approach**:
+ * This problem can be solved using Floyd's Cycle Detection Algorithm, which involves two phases:
+ *
+ * 1. **Cycle Detection (Phase 1)**:
+ *    - Use two pointers:
+ *        - `hare` (fast pointer): moves two steps at a time.
+ *        - `tortoise` (slow pointer): moves one step at a time.
+ *    - If there is a cycle, these two pointers will eventually meet.
+ *    - If the fast pointer (`hare`) reaches the end of the list, then there is no cycle.
+ *
+ * 2. **Finding the Start of the Cycle (Phase 2)**:
+ *    - Reset the fast pointer (`hare`) to the head of the list.
+ *    - Move both `hare` and `tortoise` one step at a time until they meet again.
+ *    - The meeting point will be the starting node of the cycle.
+ *
+ * **Time Complexity**: O(N)
+ * - Phase 1: O(N) to detect the cycle.
+ * - Phase 2: O(N) to find the starting node of the cycle.
+ *
+ * **Space Complexity**: O(1)
+ * - No additional space is used beyond the two pointers.
+ *
+ * **Edge Cases**:
+ * - Empty list: Return null.
+ * - Single-node list: Return null unless it forms a cycle.
+ * - No cycle: Return null.
+
 */
 
 // link:- https://leetcode.com/problems/linked-list-cycle-ii
