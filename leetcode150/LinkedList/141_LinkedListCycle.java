@@ -1,14 +1,35 @@
 /**
- * Definition for singly-linked list.
- * class ListNode {
- * int val;
- * ListNode next;
- * ListNode(int x) {
- * val = x;
- * next = null;
- * }
- * }
+ * Problem: Detect if a linked list has a cycle.
+ *
+ * A cycle exists in a linked list if some node can be visited again by following the `next` pointers.
+ * The goal is to return `true` if a cycle exists; otherwise, return `false`.
+ *
+ * **Approach 1: Using a HashSet**
+ * - Maintain a set of visited nodes.
+ * - Traverse the linked list while checking if the current node is already in the set.
+ * - If the current node is found in the set, a cycle exists.
+ * - If the traversal completes without finding a cycle, return `false`.
+ *
+ * **Time Complexity**: O(N) 
+ * - Each node is visited once.
+ *
+ * **Space Complexity**: O(N)
+ * - Additional space for the HashSet to store visited nodes.
+ *
+ * **Approach 2: Using Two Pointers (Floyd's Cycle Detection Algorithm)**
+ * - Use two pointers:
+ *     - `hare` (fast pointer): moves two steps at a time.
+ *     - `tortoise` (slow pointer): moves one step at a time.
+ * - If a cycle exists, the two pointers will eventually meet.
+ * - If the fast pointer (`hare`) reaches the end, there is no cycle.
+ *
+ * **Time Complexity**: O(N)
+ * - Each node is visited at most twice.
+ *
+ * **Space Complexity**: O(1)
+ * - No additional space is used.
  */
+
 
 /**
 Method - 1 using HashSet 
