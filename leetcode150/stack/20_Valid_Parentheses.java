@@ -1,83 +1,75 @@
-/**
- * Problem: Longest Valid Parentheses
- * 
- * Given a string containing just the characters '(' and ')', 
- * return the length of the longest valid (well-formed) parentheses substring.
- * 
- * Detailed Approach:
- * 1. Use a stack to help track indices of characters in the string.
- *    - The stack is initialized with a placeholder index (-1) to handle cases where a valid substring starts from the very beginning.
- * 
- * 2. Traverse the string character by character:
- *    - If the character is '(': 
- *      - Push its index onto the stack. 
- *      - This marks the potential start of a valid substring if matched later by a ')'.
- *    - If the character is ')':
- *      - Pop the top of the stack to attempt matching it with a previous '('.
- *      - After popping:
- *          * If the stack becomes empty, it means there was no matching '(' for the current ')'.
- *            Push the current index of ')' onto the stack as a new boundary.
- *          * If the stack is not empty, calculate the length of the valid substring:
- *            - Subtract the index at the top of the stack (which represents the last unmatched character before the valid substring) from the current index.
- *            - Update `maxLength` if this new length is greater than the current `maxLength`.
- * 
- * 3. Continue this process for every character in the string.
- *    - By the end of the traversal, `maxLength` will contain the length of the longest valid parentheses substring.
- * 
- * Key Insight:
- * - The stack keeps track of indices of unmatched '(' and boundaries of valid substrings.
- * - By calculating the difference between the current index and the index on top of the stack, we determine the length of valid substrings dynamically.
- * 
- * Time Complexity: O(n)
- *    - The string is traversed once, and each push/pop operation on the stack takes O(1).
- * 
- * Space Complexity: O(n)
- *    - In the worst case, the stack may store all indices of the string (e.g., when all characters are '(').
- */
+/*
+Problem: Valid Parentheses (LeetCode Problem 20)
+Given a string `s` containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+An input string is valid if:
+1. Open brackets must be closed by the same type of brackets.
+2. Open brackets must be closed in the correct order.
+3. Every close bracket has a corresponding open bracket of the same type.
+Examples:
+1. Input: s = "()" -> Output: true
+2. Input: s = "()[]{}" -> Output: true
+3. Input: s = "(]" -> Output: false
+4. Input: s = "([])" -> Output: true
+Approach:
+We solve this problem using a stack data structure, which ensures that brackets are matched in the correct order.
+Method 1 (Commented Out):
+- Traverse the string character by character.
+- For every opening bracket ('(', '{', '['), push the corresponding closing bracket (')', '}', ']') onto the stack.
+- For every closing bracket:
+    - If the stack is empty or the top of the stack does not match the current bracket, return false.
+- At the end, if the stack is empty, return true.
+        // Stack<Character> stack = new Stack<>();
+        // for (int i = 0; i < s.length(); i++) {
+        // char currentChar = s.charAt(i);
+        // if (currentChar == '(') {
+        // stack.push(')');
+        // } else if (currentChar == '{') {
+        // stack.push('}');
+        // } else if (currentChar == '[') {
+        // stack.push(']');
+        // } else {
+        // if (stack.isEmpty() || stack.pop() != currentChar) {
+        // return false;
+        // }
+        // }
+        // }
+        // return stack.isEmpty();
+Method 2 (Optimized and Implemented Below):
+- The same approach as Method 1, but written in a cleaner and concise manner using a for-each loop.
+Time Complexity:
+- O(n), where `n` is the length of the string. We traverse the string once, and each push/pop operation on the stack takes O(1).
+Space Complexity:
+- O(n), in the worst case, all characters in the string are opening brackets and are pushed onto the stack.
+Below is the code with comments explaining each step:
+*/
 
 class Solution {
-    public int longestValidParentheses(String s) {
-        Stack<Integer> stack = new Stack<>(); // Stack to store indices
-        int maxLength = 0; // Variable to keep track of the maximum valid length
-
-        stack.push(-1); // Push a placeholder index to handle edge cases
-
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i); // Get the current character
-
-            if (ch == '(') {
-                // If the character is '(', push its index onto the stack
-                stack.push(i);
-            } else {
-                // If the character is ')'
-
-                stack.pop(); // Pop the top of the stack to check for a matching '(' 
-
-                if (stack.isEmpty()) {
-                    // If the stack is empty, push the current index as a boundary
-                    stack.push(i);
-                } else {
-                    // Calculate the length of the current valid substring
-                    maxLength = Math.max(maxLength, i - stack.peek());
-                }
-            }
+    public boolean isValid(String s) {
+        // Initialize a stack to store the expected closing brackets
+        Stack<Character> stack = new Stack<>();
+        // Iterate over each character in the input string
+        for (char ch : s.toCharArray()) {
+            // If it's an opening bracket, push the corresponding closing bracket onto the stack
+            if (ch == '(')
+                stack.push(')');
+            else if (ch == '{')
+                stack.push('}');
+            else if (ch == '[')
+                stack.push(']');
+            else if (stack.isEmpty() || stack.pop() != ch) // If the stack is empty or the top of the stack does not match the current closing bracket
+                return false; // Invalid string
         }
 
-        return maxLength; // Return the maximum length of valid parentheses found
+        // If the stack is empty, all brackets were matched correctly
+        return stack.isEmpty();
     }
 }
 
-/**
- * Example Usage:
- * Input: s = "(()"
- * Output: 2
- * Explanation: The longest valid parentheses substring is "()".
- * 
- * Input: s = ")()())"
- * Output: 4
- * Explanation: The longest valid parentheses substring is "()()".
- * 
- * Input: s = ""
- * Output: 0
- * Explanation: There are no valid parentheses substrings.
- */
+/*
+Summary of Approach:
+- Use a stack to track expected closing brackets for every opening bracket encountered.
+- Validate that every closing bracket matches the top of the stack.
+- Ensure the stack is empty at the end for the string to be valid.
+Time Complexity: O(n)
+Space Complexity: O(n)
+*/
